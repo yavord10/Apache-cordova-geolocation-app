@@ -4,55 +4,51 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <script src="js/jquery-3.5.1.min.js"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" charset="utf-8"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" charset="utf-8"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
-    <title>Taxi Sharing</title>
+    <title>MegaMax Sale</title>
   </head>
   <body>
-    <h1>Taxi Sharing</h1>
+    <h1>MegaMax Sale</h1>
     <div>
-      <h3>Register:</h3>
+      <h3>User:</h3>
       <div>
-        <label>OUCU:</label>
-        <input id="oucu" type="text" />
+        <label>Salesperson:</label>
+        <input id="salesperson" type="text" />
+        <labe>Client ID:</labe>
+        <input id="clientId" type="text" />
       </div>
-      <h3>Offer:</h3>
+      <h3>Catalogue:</h3>
       <div>
-        <label>Pickup time:</label>
-        <input id="pickupTime" type="datetime-local" />
-        <label>Prepared to wait:</label>
-        <input id="waitTime" type="number" />
-        <label>Pick up location:</label>
-        <select id="pickupLocation">
-          <option value="Milton Keynes Central station">Milton Keynes Central station</option>
-          <option value="Open University campus, Milton Keynes">Open University campus, Milton Keynes</option>
-        </select>
+        <button onclick="window.controller.displayPrevWidget()">Prev Widget</button>
+        <button onclick="window.controller.displayNextWidget()">Next Widget</button>
+        <label>Number:</label>
+        <input id="number" type="number" />
       </div>
-      <h3>Share:</h3>
       <div>
-        <label>Pickup time:</label>
-        <input id="sharePickupTime" type="datetime-local" />
-        <label>Pick up location:</label>
-        <select id="sharePickupLocation">
-          <option value="Milton Keynes Central station">Milton Keynes Central station</option>
-          <option value="Open University campus, Milton Keynes">Open University campus, Milton Keynes</option>
-        </select>
+        <p id="widgetDescription"></p>
+        <img id="widgetImage" />
+      </div>
+      <h3>Order:</h3>
+      <div>
+        <label>Agreed price:</label>
+        <input id="agreedPrice" type="text" />
+        <div>
+          <button onclick="window.controller.addToOrder()">Add to Order</button>
+          <button onclick="window.controller.placeNewOrder()">Place New Order</button>
+        </div>
+        <div>
+          Order list:
+          <ul>
+            <li>order 1</li>
+            <li>order 2</li>
+          </ul>
+        </div>
+      </div>
+      <h3>Map:</h3>
+      <div>
+        map placeholder
       </div>
     </div>
-    <div>
-      <button onclick="window.controller.registerUser()">Register</button>
-      <button onclick="window.controller.offerTaxi()">Offer booking</button>
-      <button onclick="window.controller.requestTaxi()">Share booking</button>
-      <button onclick="">Cancel all</button>
-      <button onclick="window.controller.updateMap()">Update map</button>
-    </div>
-    <div id="mapContainer" />
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/helpers.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>
