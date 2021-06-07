@@ -14,15 +14,13 @@
         <label>Salesperson:</label>
         <input id="salesperson" type="text" />
         <p id="validateMessage"></p>
-        <labe>Client ID:</labe>
-        <input id="clientId" type="text" />
+        <label>Client ID:</label>
+        <input id="clientId" type="number" />
       </div>
       <h3>Catalogue:</h3>
       <div>
         <button onclick="window.controller.displayPrevWidget()">Prev Widget</button>
         <button onclick="window.controller.displayNextWidget()">Next Widget</button>
-        <label>Number:</label>
-        <input id="number" type="number" />
       </div>
       <div>
         <p id="widgetDescription"></p>
@@ -31,16 +29,18 @@
       <h3>Order:</h3>
       <div>
         <label>Agreed price:</label>
-        <input id="agreedPrice" type="text" />
+        <input id="agreedPrice" type="number" />
+        <label>Number:</label>
+        <input id="orderAmount" type="number" />
         <div>
+          <br />
           <button onclick="window.controller.addToOrder()">Add to Order</button>
           <button onclick="window.controller.placeNewOrder()">Place New Order</button>
+          <br />
         </div>
         <div>
           Order list:
-          <ul>
-            <li>order 1</li>
-            <li>order 2</li>
+          <ul id="orderList">
           </ul>
         </div>
       </div>
