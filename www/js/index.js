@@ -28,7 +28,6 @@ function Controller() {
     let clientId = 1;
     let orderAmount = 0;
     let agreedPrice = 0;
-    let orderId = "";
     let orderList = [];
 
     const fetchData = async (dataType, id='') => {
@@ -60,7 +59,6 @@ function Controller() {
     //  FR1.1 ---> VALIDATE INPUT
     this.handleInput = () => {
         const validateOUCU = (oucu) => {
-            console.log(oucu, oucu.charAt(0), oucu.charAt(oucu.length -1));
             if (oucu.charAt(0).match(/[a-z]/i) && /^\d+$/.test(oucu.charAt(oucu.length - 1))) {
                 return true;
             };
@@ -71,7 +69,6 @@ function Controller() {
         document.addEventListener('input', (e) => {
             const message = document.getElementById('validateMessage');
 
-            console.log(e.target.id)
             if (e.target.id === 'salesperson') {
                 if (validateOUCU(e.target.value)) {
                     message.textContent = 'OUCU is valid';
@@ -98,8 +95,6 @@ function Controller() {
 
     //  FR1.2 ----> DISPLAY WIDGETS
     const displayWidget = (widgetData) => {
-        console.log(widgetData);
-
         const description = document.getElementById('widgetDescription');
         description.textContent = widgetData[0].description;
 
@@ -141,7 +136,7 @@ function Controller() {
 
     // FR 1.3 ---> ADDING WIDGET TO ORDER ITEMS
     this.createOrder = () => {
-        fetch(`${BASE_URL}orders?OUCU=tm352&password=`, {
+        fetch(`${BASE_URL}orders?OUCU=tm352&password=6WGc5Q76`, {
             method: 'POST',
             body: JSON.stringify({
                 OUCU: oucu,
@@ -172,6 +167,7 @@ function Controller() {
         }
     }
 
+    //FR 1.3 --> ADD WIDGET TO ORDER ITEMS LIST
     this.addToOrder = () => {
         const listEl = document.getElementById('orderList');
         const el = document.createElement('li');
@@ -185,6 +181,22 @@ function Controller() {
             total: totalPrice + 20 / 100 * totalPrice
         }]
         listEl.appendChild(el);
+
+        calculateTotalAmount();
+    }
+
+    // FR 1.4 --> calculate total + VAT
+    const calculateTotalAmount = () => {
+        let total = 0;
+
+        orderList.forEach((order) => {
+            total = total + order.total;
+        });
+
+        console.log(total);
+
+        const totalEl = document.getElementById('totalAmount');
+        totalEl.textContent = total;
     }
 
     // FR 1.3 ---> start order
