@@ -18,6 +18,8 @@ function onDeviceReady() {
     controller.getClientData();
 
     controller.updateMap();
+
+    controller.initializeMap();
 }
 
 
@@ -217,5 +219,35 @@ function Controller() {
         navigator.geolocation.getCurrentPosition(onSuccess, onError, {
             enableHighAccuracy: true,
         });
+    }
+
+    this.initializeMap = () => {
+        var platform = new H.service.Platform({
+            // TODO: Change to your own API key or map will NOT work!
+            apikey: "CgiRyq6bWCZR0N0_K6L6lUAEiugD5oAiyPo_SpmQLwQ",
+        });
+        // Obtain the default map types from the platform object:
+        var defaultLayers = platform.createDefaultLayers();
+        // Instantiate (and display) a map object:
+        var map = new H.Map(
+            document.getElementById("mapContainer"),
+            defaultLayers.vector.normal.map,
+            {
+                zoom: 14,
+                center: { lat: 52.5, lng: 13.4 },
+            }
+        );
+        // Create the default UI:
+        var ui = H.ui.UI.createDefault(map, defaultLayers);
+        var mapSettings = ui.getControl("mapsettings");
+        var zoom = ui.getControl("zoom");
+        var scalebar = ui.getControl("scalebar");
+        mapSettings.setAlignment("top-left");
+        zoom.setAlignment("top-left");
+        scalebar.setAlignment("top-left");
+        // Enable the event system on the map instance:
+        var mapEvents = new H.mapevents.MapEvents(map);
+        // Instantiate the default behavior, providing the mapEvents object:
+        new H.mapevents.Behavior(mapEvents);
     }
 }
