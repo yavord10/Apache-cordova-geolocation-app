@@ -16,6 +16,8 @@ function onDeviceReady() {
     controller.handleInput();
 
     controller.getClientData();
+
+    controller.updateMap();
 }
 
 
@@ -203,5 +205,17 @@ function Controller() {
     this.placeNewOrder = () => {
         controller.createOrder();
         controller.getOrderItemsData();
+    }
+
+    this.updateMap = () => {
+        const onSuccess = (position) => {
+            console.log("Obtained position", position);
+        }
+        const onError = (error) => {
+            console.error("Error calling getCurrentPosition", error);
+        }
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+            enableHighAccuracy: true,
+        });
     }
 }

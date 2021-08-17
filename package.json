@@ -14,10 +14,15 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "cordova-android": "^9.1.0",
-    "cordova-browser": "^6.0.0"
+    "cordova-browser": "^6.0.0",
+    "cordova-plugin-geolocation": "^4.1.0"
   },
   "cordova": {
-    "plugins": {},
+    "plugins": {
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      }
+    },
     "platforms": [
       "android",
       "browser"
