@@ -17,8 +17,6 @@ function onDeviceReady() {
 
     controller.getClientData();
 
-    controller.updateMap();
-
     controller.initializeMap();
 }
 
@@ -209,22 +207,10 @@ function Controller() {
         controller.getOrderItemsData();
     }
 
-    this.updateMap = () => {
-        const onSuccess = (position) => {
-            console.log("Obtained position", position);
-        }
-        const onError = (error) => {
-            console.error("Error calling getCurrentPosition", error);
-        }
-        navigator.geolocation.getCurrentPosition(onSuccess, onError, {
-            enableHighAccuracy: true,
-        });
-    }
-
     this.initializeMap = () => {
         var platform = new H.service.Platform({
             // TODO: Change to your own API key or map will NOT work!
-            apikey: "CgiRyq6bWCZR0N0_K6L6lUAEiugD5oAiyPo_SpmQLwQ",
+            apikey: "eAfwuTu8zUxhOAg4ju1aXjt15cUDf5N9_kaDyg9OAQY",
         });
         // Obtain the default map types from the platform object:
         var defaultLayers = platform.createDefaultLayers();
@@ -237,6 +223,7 @@ function Controller() {
                 center: { lat: 52.5, lng: 13.4 },
             }
         );
+
         // Create the default UI:
         var ui = H.ui.UI.createDefault(map, defaultLayers);
         var mapSettings = ui.getControl("mapsettings");
@@ -249,5 +236,56 @@ function Controller() {
         var mapEvents = new H.mapevents.MapEvents(map);
         // Instantiate the default behavior, providing the mapEvents object:
         new H.mapevents.Behavior(mapEvents);
+        
+        //update map function
+        const updateMap = (destination) => {
+            var icon = new H.map.DomIcon("<div>&#x1F3C3;</div>");
+            var mapInterval;
+            var marker;
+            var bubble;
+    
+            const onSuccess = (position) => {
+                console.log("Obtained position", position);
+                var point = {
+                    lng: position.coords.longitude,
+                    lat: position.coords.latitude,
+                };
+                if (marker) {
+                    // Remove marker if it already exists
+                    map.removeObject(marker);
+                }
+                if (bubble) {
+                    // Remove bubble if it already exists
+                    ui.removeBubble(bubble);
+                }
+                    map.setCenter(point);
+                marker = new H.map.DomMarker(point, { icon: icon });
+                map.addObject(marker);
+                // Set destination to position of first marker
+                if (destination) {
+                    bubble = new H.ui.InfoBubble(destination, {
+                        content: "<b>You want to get there!</b>",
+                    });
+                    ui.addBubble(bubble);
+                }
+            }
+            const onError = (error) => {
+                console.error("Error calling getCurrentPosition", error);
+            }
+            navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+                enableHighAccuracy: true,
+            });
+        }
+
+        //event listener to set marker
+        map.addEventListener("tap", function (evt) {
+            // Update destination
+            let destination = map.screenToGeo(
+                evt.currentPointer.viewportX,
+                evt.currentPointer.viewportY
+            );
+            // Update map now
+            updateMap(destination);
+        });
     }
 }
