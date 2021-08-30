@@ -207,6 +207,7 @@ function Controller() {
         controller.getOrderItemsData();
     }
 
+    // FR 2 - map functionality
     this.initializeMap = () => {
         var platform = new H.service.Platform({
             // TODO: Change to your own API key or map will NOT work!
@@ -238,9 +239,8 @@ function Controller() {
         new H.mapevents.Behavior(mapEvents);
         
         //update map function
-        const updateMap = (destination) => {
-            var icon = new H.map.DomIcon("<div>&#x1F3C3;</div>");
-            var mapInterval;
+        const updateMap = () => {
+            var icon = new H.map.DomIcon("<div>Client is here</div>");
             var marker;
             var bubble;
     
@@ -260,14 +260,6 @@ function Controller() {
                 }
                     map.setCenter(point);
                 marker = new H.map.DomMarker(point, { icon: icon });
-                map.addObject(marker);
-                // Set destination to position of first marker
-                if (destination) {
-                    bubble = new H.ui.InfoBubble(destination, {
-                        content: "<b>You want to get there!</b>",
-                    });
-                    ui.addBubble(bubble);
-                }
             }
             const onError = (error) => {
                 console.error("Error calling getCurrentPosition", error);
@@ -277,15 +269,9 @@ function Controller() {
             });
         }
 
-        //event listener to set marker
-        map.addEventListener("tap", function (evt) {
-            // Update destination
-            let destination = map.screenToGeo(
-                evt.currentPointer.viewportX,
-                evt.currentPointer.viewportY
-            );
-            // Update map now
-            updateMap(destination);
+        document.getElementById('add-to-order').addEventListener("click", function (evt) {
+            // Update map with client location
+            updateMap();
         });
     }
 }
